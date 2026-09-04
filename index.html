@@ -10,31 +10,51 @@
     box-sizing:border-box;
     margin:0;
     padding:0;
-    font-family:Arial,Helvetica,sans-serif;
+    font-family:Arial,sans-serif;
 }
 
 body{
     background:#05070b;
     color:#fff;
     min-height:100vh;
-    padding-bottom:115px;
+    padding-bottom:125px;
     overflow-x:hidden;
 }
 
-/* BACKGROUND */
-.bg{
+body:before{
+    content:"";
     position:fixed;
-    inset:0;
-    z-index:-2;
-    background:
-        radial-gradient(circle at 20% 0%,rgba(0,110,255,.22),transparent 30%),
-        radial-gradient(circle at 90% 30%,rgba(0,70,180,.13),transparent 35%),
-        #05070b;
+    width:420px;
+    height:420px;
+    top:-180px;
+    left:-180px;
+    background:#087cff;
+    opacity:.14;
+    filter:blur(110px);
+    border-radius:50%;
+    z-index:-1;
+}
+
+body:after{
+    content:"";
+    position:fixed;
+    width:380px;
+    height:380px;
+    right:-190px;
+    bottom:50px;
+    background:#0048ff;
+    opacity:.09;
+    filter:blur(110px);
+    border-radius:50%;
+    z-index:-1;
 }
 
 /* HEADER */
+
 header{
-    padding:24px 18px 12px;
+    padding:24px 18px 8px;
+    max-width:1100px;
+    margin:auto;
 }
 
 .top{
@@ -44,9 +64,8 @@ header{
 }
 
 .logo{
-    font-size:24px;
-    font-weight:800;
-    letter-spacing:-1px;
+    font-size:26px;
+    font-weight:900;
 }
 
 .logo span{
@@ -57,7 +76,7 @@ header{
     width:38px;
     height:38px;
     border-radius:50%;
-    background:linear-gradient(135deg,#1683ff,#063b91);
+    background:linear-gradient(135deg,#1683ff,#06408e);
     display:flex;
     align-items:center;
     justify-content:center;
@@ -65,81 +84,107 @@ header{
 }
 
 /* SEARCH */
+
 .search{
+    height:52px;
     margin-top:20px;
+    padding:7px 8px 7px 15px;
     display:flex;
     align-items:center;
     gap:10px;
-    background:#11151d;
-    border:1px solid #202734;
-    border-radius:14px;
-    padding:13px 15px;
+    background:#11161f;
+    border:1px solid #222b38;
+    border-radius:15px;
 }
 
-.search svg{
-    width:20px;
-    fill:#87909e;
+.search-icon{
+    color:#798493;
+    font-size:22px;
 }
 
 .search input{
     flex:1;
-    background:none;
+    min-width:0;
     border:0;
-    outline:none;
-    color:white;
-    font-size:15px;
+    outline:0;
+    background:none;
+    color:#fff;
+    font-size:14px;
 }
 
 .search input::placeholder{
-    color:#727a88;
+    color:#707987;
 }
 
 .search button{
+    width:38px;
+    height:38px;
     border:0;
+    border-radius:11px;
     background:#1683ff;
-    color:white;
-    width:34px;
-    height:34px;
-    border-radius:10px;
-    cursor:pointer;
+    color:#fff;
+    font-size:18px;
 }
 
 /* SECTION */
+
 .section{
-    padding:18px;
+    max-width:1100px;
+    margin:auto;
+    padding:20px 18px 0;
 }
 
-.section-title{
+.title{
     font-size:21px;
     font-weight:800;
     margin-bottom:14px;
 }
 
-/* LAST PLAYED */
-.last-grid{
+/* HORIZONTAL */
+
+.horizontal{
     display:flex;
-    gap:13px;
+    gap:14px;
     overflow-x:auto;
+    overflow-y:hidden;
     scrollbar-width:none;
+    scroll-snap-type:x mandatory;
+    padding:3px 2px 12px;
+    -webkit-overflow-scrolling:touch;
 }
 
-.last-grid::-webkit-scrollbar{
+.horizontal::-webkit-scrollbar{
     display:none;
 }
+
+/* LAST */
 
 .last-card{
     min-width:145px;
     max-width:145px;
+    scroll-snap-align:start;
     cursor:pointer;
+    transition:.2s;
 }
 
-.cover{
+.last-card:active{
+    transform:scale(.95);
+}
+
+.last-cover{
     width:145px;
     height:145px;
-    border-radius:12px;
+    border-radius:14px;
+    overflow:hidden;
+}
+
+.last-cover img,
+.result-cover img,
+.mini-cover img,
+.player-cover img{
+    width:100%;
+    height:100%;
     object-fit:cover;
-    background:#111821;
-    display:block;
 }
 
 .last-title{
@@ -152,44 +197,41 @@ header{
 }
 
 .last-artist{
-    color:#7f8795;
+    color:#778190;
     font-size:12px;
     margin-top:4px;
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
 }
 
-/* SEARCH RESULT */
-.results{
-    display:grid;
-    grid-template-columns:repeat(2,1fr);
-    gap:14px;
-}
+/* RESULT */
 
 .result-card{
-    background:linear-gradient(145deg,#10151e,#0a0d13);
-    border:1px solid #1c2430;
+    min-width:172px;
+    max-width:172px;
+    padding:9px;
     border-radius:16px;
-    padding:10px;
+    background:linear-gradient(145deg,#111720,#090c12);
+    border:1px solid #202936;
+    scroll-snap-align:start;
     cursor:pointer;
     transition:.2s;
 }
 
 .result-card:active{
-    transform:scale(.97);
+    transform:scale(.95);
 }
 
 .result-cover{
     width:100%;
     aspect-ratio:1;
-    object-fit:cover;
     border-radius:11px;
-    background:#151b24;
-}
-
-.result-info{
-    padding:8px 2px 3px;
+    overflow:hidden;
 }
 
 .result-title{
+    margin-top:9px;
     font-size:14px;
     font-weight:700;
     white-space:nowrap;
@@ -198,55 +240,101 @@ header{
 }
 
 .result-artist{
-    font-size:12px;
-    color:#777f8d;
     margin-top:5px;
+    color:#778190;
+    font-size:12px;
     white-space:nowrap;
     overflow:hidden;
     text-overflow:ellipsis;
 }
 
 .play-small{
-    margin-top:9px;
-    width:34px;
-    height:34px;
-    border-radius:50%;
-    border:0;
-    background:#1683ff;
-    color:white;
+    width:35px;
+    height:35px;
     float:right;
+    margin-top:9px;
+    border:0;
+    border-radius:50%;
+    background:#1683ff;
+    color:#fff;
+}
+
+/* EMPTY COVER */
+
+.empty-cover{
+    width:100%;
+    height:100%;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    background:linear-gradient(145deg,#151b24,#080b10);
+    color:#2e72bf;
+    font-size:38px;
 }
 
 /* EMPTY */
+
 .empty{
-    color:#69717e;
-    text-align:center;
+    min-width:100%;
     padding:35px 10px;
-    grid-column:1/-1;
+    text-align:center;
+    color:#687382;
+    font-size:13px;
+}
+
+/* LOADING */
+
+.loading{
+    display:none;
+    padding:30px;
+    text-align:center;
+    color:#758090;
+    font-size:13px;
+}
+
+.loading.show{
+    display:block;
+}
+
+.loader{
+    width:28px;
+    height:28px;
+    margin:0 auto 12px;
+    border:3px solid #243041;
+    border-top-color:#1683ff;
+    border-radius:50%;
+    animation:spin .8s linear infinite;
+}
+
+@keyframes spin{
+    to{
+        transform:rotate(360deg);
+    }
 }
 
 /* NOTIFICATION */
+
 .notification{
     position:fixed;
-    top:18px;
+    z-index:500;
+    top:15px;
     left:50%;
-    transform:translate(-50%,-130%);
     width:calc(100% - 30px);
     max-width:390px;
-    background:#101722;
-    border:1px solid #243142;
-    border-radius:15px;
-    padding:14px;
-    z-index:100;
-    box-shadow:0 15px 40px rgba(0,0,0,.5);
-    transition:.35s cubic-bezier(.2,.8,.2,1);
+    padding:13px;
+    border-radius:16px;
+    background:#111821;
+    border:1px solid #283343;
+    box-shadow:0 20px 60px rgba(0,0,0,.55);
+    transform:translate(-50%,-150%);
+    transition:.4s;
 }
 
 .notification.show{
     transform:translate(-50%,0);
 }
 
-.notif-box{
+.notif{
     display:flex;
     align-items:center;
     gap:12px;
@@ -255,51 +343,51 @@ header{
 .notif-icon{
     width:42px;
     height:42px;
-    border-radius:11px;
-    background:#1683ff;
+    border-radius:12px;
     display:flex;
     justify-content:center;
     align-items:center;
-    font-size:19px;
+    background:#1683ff;
 }
 
 .notif-title{
     font-size:14px;
-    font-weight:bold;
+    font-weight:800;
 }
 
 .notif-text{
-    color:#788292;
-    font-size:12px;
     margin-top:3px;
+    color:#788391;
+    font-size:12px;
 }
 
 /* MINI PLAYER */
-.mini-player{
+
+.mini{
     position:fixed;
+    z-index:300;
     left:10px;
     right:10px;
-    bottom:70px;
+    bottom:71px;
     height:66px;
-    background:rgba(15,19,26,.96);
-    border:1px solid #242d39;
-    border-radius:14px;
-    z-index:50;
     display:none;
     align-items:center;
     padding:7px;
-    box-shadow:0 12px 40px rgba(0,0,0,.5);
+    border-radius:15px;
+    background:rgba(14,18,25,.97);
+    border:1px solid #252f3d;
+    box-shadow:0 15px 50px rgba(0,0,0,.55);
 }
 
-.mini-player.show{
+.mini.show{
     display:flex;
 }
 
 .mini-cover{
     width:51px;
     height:51px;
-    border-radius:9px;
-    object-fit:cover;
+    border-radius:10px;
+    overflow:hidden;
 }
 
 .mini-info{
@@ -310,39 +398,38 @@ header{
 
 .mini-title{
     font-size:13px;
-    font-weight:bold;
+    font-weight:700;
     white-space:nowrap;
     overflow:hidden;
     text-overflow:ellipsis;
 }
 
 .mini-artist{
+    color:#747e8c;
     font-size:11px;
-    color:#737c8b;
     margin-top:4px;
 }
 
-.mini-play{
-    width:40px;
-    height:40px;
+.mini button{
+    width:41px;
+    height:41px;
     border:0;
     border-radius:50%;
     background:#1683ff;
     color:#fff;
-    font-size:16px;
 }
 
-/* FULL PLAYER */
+/* PLAYER */
+
 .player{
     position:fixed;
     inset:0;
-    z-index:80;
+    z-index:400;
     background:#05070b;
+    padding:18px;
+    overflow-y:auto;
     transform:translateY(100%);
     transition:.4s cubic-bezier(.2,.8,.2,1);
-    display:flex;
-    flex-direction:column;
-    padding:18px;
 }
 
 .player.open{
@@ -359,18 +446,19 @@ header{
     width:42px;
     height:42px;
     border:1px solid #252e3b;
+    border-radius:12px;
     background:#10151d;
     color:#fff;
-    border-radius:12px;
+    font-size:19px;
 }
 
 .player-cover{
-    width:min(78vw,330px);
+    width:min(82vw,350px);
     aspect-ratio:1;
-    border-radius:18px;
-    object-fit:cover;
     margin:45px auto 30px;
-    box-shadow:0 25px 70px rgba(0,90,255,.22);
+    border-radius:20px;
+    overflow:hidden;
+    box-shadow:0 25px 80px rgba(0,95,255,.2);
 }
 
 .player-title{
@@ -382,15 +470,16 @@ header{
 }
 
 .player-artist{
-    color:#7d8695;
+    color:#7b8594;
     margin-top:7px;
 }
 
 .progress{
-    margin-top:27px;
+    margin-top:28px;
 }
 
-.progress input{
+.progress input,
+.volume input{
     width:100%;
     accent-color:#1683ff;
 }
@@ -398,7 +487,7 @@ header{
 .times{
     display:flex;
     justify-content:space-between;
-    color:#697281;
+    color:#687281;
     font-size:11px;
     margin-top:5px;
 }
@@ -412,8 +501,8 @@ header{
 }
 
 .control{
-    width:45px;
-    height:45px;
+    width:46px;
+    height:46px;
     border:0;
     border-radius:50%;
     background:#121821;
@@ -422,232 +511,356 @@ header{
 }
 
 .main-play{
-    width:66px;
-    height:66px;
+    width:67px;
+    height:67px;
     background:#1683ff;
-    font-size:24px;
+    font-size:22px;
 }
 
 .volume{
     margin-top:25px;
     display:flex;
-    gap:10px;
     align-items:center;
+    gap:10px;
 }
 
-.volume input{
-    flex:1;
-    accent-color:#1683ff;
-}
+/* NAV */
 
-/* BOTTOM NAV */
-.bottom-nav{
+.bottom{
     position:fixed;
-    bottom:0;
     left:0;
     right:0;
-    height:62px;
-    background:rgba(6,8,12,.97);
-    border-top:1px solid #1c222c;
-    z-index:60;
+    bottom:0;
+    height:63px;
+    z-index:350;
     display:flex;
-    justify-content:space-around;
     align-items:center;
+    justify-content:space-around;
+    background:rgba(5,7,11,.98);
+    border-top:1px solid #1b222d;
 }
 
-.nav-item{
-    color:#68717f;
+.nav{
+    color:#687281;
     text-align:center;
     font-size:10px;
-    cursor:pointer;
 }
 
-.nav-item.active{
+.nav.active{
     color:#1683ff;
 }
 
 .nav-icon{
-    font-size:20px;
     display:block;
     margin-bottom:3px;
-}
-
-/* LOADING */
-.loading{
-    display:none;
-    text-align:center;
-    padding:35px;
-    color:#788291;
-}
-
-.loading.show{
-    display:block;
-}
-
-.loader{
-    width:28px;
-    height:28px;
-    border:3px solid #253142;
-    border-top-color:#1683ff;
-    border-radius:50%;
-    animation:spin .8s linear infinite;
-    margin:0 auto 12px;
-}
-
-@keyframes spin{
-    to{transform:rotate(360deg)}
-}
-
-@media(min-width:700px){
-    .results{
-        grid-template-columns:repeat(4,1fr);
-    }
-
-    .section{
-        max-width:1000px;
-        margin:auto;
-    }
-
-    header{
-        max-width:1000px;
-        margin:auto;
-    }
+    font-size:20px;
 }
 </style>
 </head>
 
 <body>
 
-<div class="bg"></div>
-
 <!-- NOTIFICATION -->
+
 <div class="notification" id="notification">
-    <div class="notif-box">
-        <div class="notif-icon" id="notifIcon">♫</div>
-        <div>
-            <div class="notif-title" id="notifTitle">Bluefy Music</div>
-            <div class="notif-text" id="notifText">Siap memutar musik</div>
+    <div class="notif">
+
+        <div class="notif-icon" id="notifIcon">
+            ♫
         </div>
+
+        <div>
+            <div class="notif-title" id="notifTitle">
+                Bluefy Music
+            </div>
+
+            <div class="notif-text" id="notifText">
+                Siap memutar musik
+            </div>
+        </div>
+
     </div>
 </div>
 
+
+<!-- HEADER -->
+
 <header>
+
     <div class="top">
-        <div class="logo">blue<span>fy</span></div>
-        <div class="profile">B</div>
+
+        <div class="logo">
+            blue<span>fy</span>
+        </div>
+
+        <div class="profile">
+            B
+        </div>
+
     </div>
+
 
     <div class="search">
-        <svg viewBox="0 0 24 24">
-            <path d="M10 2a8 8 0 105.29 14L20 20.71 21.41 19.3l-4.7-4.7A8 8 0 0010 2zm0 2a6 6 0 110 12 6 6 0 010-12z"/>
-        </svg>
 
-        <input id="searchInput"
-               placeholder="Apa yang ingin kamu dengarkan?">
+        <div class="search-icon">
+            ⌕
+        </div>
 
-        <button onclick="searchMusic()">⌕</button>
+        <input
+            id="searchInput"
+            placeholder="Apa yang ingin kamu dengarkan?"
+        >
+
+        <button onclick="searchMusic()">
+            ⌕
+        </button>
+
     </div>
+
 </header>
 
-<!-- LAST PLAYED -->
-<section class="section">
-    <div class="section-title">Putar terakhir</div>
 
-    <div class="last-grid" id="lastPlayed">
-        <div class="empty">Belum ada lagu yang diputar</div>
+<!-- LAST -->
+
+<section class="section">
+
+    <div class="title">
+        Putar terakhir
     </div>
+
+    <div
+        class="horizontal"
+        id="lastPlayed"
+    ></div>
+
 </section>
 
-<!-- SEARCH RESULTS -->
-<section class="section">
-    <div class="section-title">Hasil pencarian</div>
 
-    <div class="loading" id="loading">
+<!-- RESULTS -->
+
+<section class="section">
+
+    <div class="title">
+        Hasil pencarian
+    </div>
+
+    <div
+        class="loading"
+        id="loading"
+    >
         <div class="loader"></div>
         Mencari lagu...
     </div>
 
-    <div class="results" id="results">
+    <div
+        class="horizontal"
+        id="results"
+    >
         <div class="empty">
-            Cari lagu favoritmu di atas 🎵
+            Cari lagu favoritmu 🎵
         </div>
     </div>
+
 </section>
 
-<!-- MINI PLAYER -->
-<div class="mini-player" id="miniPlayer">
-    <img class="mini-cover" id="miniCover">
 
-    <div class="mini-info" onclick="openPlayer()">
-        <div class="mini-title" id="miniTitle">Tidak ada lagu</div>
-        <div class="mini-artist" id="miniArtist">-</div>
+<!-- MINI PLAYER -->
+
+<div
+    class="mini"
+    id="mini"
+>
+
+    <div
+        class="mini-cover"
+        id="miniCover"
+    ></div>
+
+    <div
+        class="mini-info"
+        onclick="openPlayer()"
+    >
+
+        <div
+            class="mini-title"
+            id="miniTitle"
+        >
+            Tidak ada lagu
+        </div>
+
+        <div
+            class="mini-artist"
+            id="miniArtist"
+        >
+            -
+        </div>
+
     </div>
 
-    <button class="mini-play" onclick="togglePlay()" id="miniPlay">▶</button>
+    <button
+        id="miniPlay"
+        onclick="togglePlay()"
+    >
+        ▶
+    </button>
+
 </div>
 
-<!-- FULL PLAYER -->
-<div class="player" id="player">
+
+<!-- PLAYER -->
+
+<div
+    class="player"
+    id="player"
+>
 
     <div class="player-top">
-        <button onclick="closePlayer()">⌄</button>
+
+        <button onclick="closePlayer()">
+            ↓
+        </button>
+
         <b>Sedang diputar</b>
-        <button onclick="closePlayer()">×</button>
+
+        <button onclick="closePlayer()">
+            ×
+        </button>
+
     </div>
 
-    <img class="player-cover" id="playerCover">
 
-    <div class="player-title" id="playerTitle">Tidak ada lagu</div>
-    <div class="player-artist" id="playerArtist">-</div>
+    <div
+        class="player-cover"
+        id="playerCover"
+    ></div>
+
+
+    <div
+        class="player-title"
+        id="playerTitle"
+    >
+        Tidak ada lagu
+    </div>
+
+    <div
+        class="player-artist"
+        id="playerArtist"
+    >
+        -
+    </div>
+
 
     <div class="progress">
-        <input type="range" id="progress" value="0" min="0" max="100">
+
+        <input
+            id="progress"
+            type="range"
+            min="0"
+            max="100"
+            value="0"
+        >
+
         <div class="times">
-            <span id="currentTime">0:00</span>
-            <span id="duration">0:00</span>
+
+            <span id="currentTime">
+                0:00
+            </span>
+
+            <span id="duration">
+                0:00
+            </span>
+
         </div>
+
     </div>
+
 
     <div class="controls">
-        <button class="control" onclick="skip(-10)">↶</button>
-        <button class="control main-play" onclick="togglePlay()" id="mainPlay">▶</button>
-        <button class="control" onclick="skip(10)">↷</button>
+
+        <button
+            class="control"
+            onclick="skip(-10)"
+        >
+            ↶
+        </button>
+
+        <button
+            class="control main-play"
+            id="mainPlay"
+            onclick="togglePlay()"
+        >
+            ▶
+        </button>
+
+        <button
+            class="control"
+            onclick="skip(10)"
+        >
+            ↷
+        </button>
+
     </div>
 
+
     <div class="volume">
+
         <span>🔊</span>
-        <input type="range" id="volume" min="0" max="1" step=".01" value="1">
+
+        <input
+            id="volume"
+            type="range"
+            min="0"
+            max="1"
+            step=".01"
+            value="1"
+        >
+
     </div>
 
 </div>
 
-<!-- AUDIO -->
+
 <audio id="audio"></audio>
 
-<!-- NAV -->
-<nav class="bottom-nav">
-    <div class="nav-item active">
+
+<!-- BOTTOM -->
+
+<nav class="bottom">
+
+    <div class="nav active">
         <span class="nav-icon">⌂</span>
         Home
     </div>
 
-    <div class="nav-item" onclick="focusSearch()">
+    <div
+        class="nav"
+        onclick="focusSearch()"
+    >
         <span class="nav-icon">⌕</span>
         Cari
     </div>
 
-    <div class="nav-item" onclick="openPlayer()">
+    <div
+        class="nav"
+        onclick="openPlayer()"
+    >
         <span class="nav-icon">♫</span>
         Player
     </div>
 
-    <div class="nav-item" onclick="showLast()">
+    <div
+        class="nav"
+        onclick="showLast()"
+    >
         <span class="nav-icon">◷</span>
         Terakhir
     </div>
+
 </nav>
 
+
 <script>
+
 const API =
 "https://api.ikyyxd.my.id/search/ytplay?q=";
 
@@ -657,27 +870,317 @@ document.getElementById("audio");
 let currentSong = null;
 let notificationTimer;
 
+
 /* =========================
    NOTIFICATION
 ========================= */
 
 function notify(title,text,icon="♫"){
+
     clearTimeout(notificationTimer);
 
-    document.getElementById("notifTitle").textContent = title;
-    document.getElementById("notifText").textContent = text;
-    document.getElementById("notifIcon").textContent = icon;
+    document.getElementById("notifTitle")
+        .textContent = title;
 
-    const n =
-    document.getElementById("notification");
+    document.getElementById("notifText")
+        .textContent = text;
 
-    n.classList.add("show");
+    document.getElementById("notifIcon")
+        .textContent = icon;
+
+    const box =
+        document.getElementById("notification");
+
+    box.classList.add("show");
 
     notificationTimer =
-    setTimeout(()=>{
-        n.classList.remove("show");
-    },2500);
+        setTimeout(()=>{
+            box.classList.remove("show");
+        },2800);
 }
+
+
+/* =========================
+   GET STRING
+========================= */
+
+function text(value){
+
+    if(value === null ||
+       value === undefined)
+        return "";
+
+    if(typeof value === "string")
+        return value.trim();
+
+    if(typeof value === "number")
+        return String(value);
+
+    if(typeof value === "object"){
+
+        return (
+            value.name ||
+            value.title ||
+            value.text ||
+            value.value ||
+            value.label ||
+            ""
+        );
+    }
+
+    return "";
+}
+
+
+/* =========================
+   FIND VALUE DEEPLY
+========================= */
+
+function deepFind(obj,keys){
+
+    if(!obj ||
+       typeof obj !== "object")
+        return "";
+
+    for(const key of keys){
+
+        if(
+            obj[key] !== undefined &&
+            obj[key] !== null
+        ){
+
+            const value =
+                text(obj[key]);
+
+            if(value)
+                return value;
+        }
+    }
+
+
+    for(const key in obj){
+
+        if(
+            typeof obj[key] === "object"
+        ){
+
+            const found =
+                deepFind(
+                    obj[key],
+                    keys
+                );
+
+            if(found)
+                return found;
+        }
+    }
+
+    return "";
+}
+
+
+/* =========================
+   NORMALIZE SONG
+========================= */
+
+function normalizeSong(item){
+
+    if(!item ||
+       typeof item !== "object")
+        return null;
+
+
+    let title =
+        deepFind(item,[
+            "title",
+            "name",
+            "song",
+            "songName",
+            "videoTitle",
+            "track",
+            "trackName"
+        ]);
+
+
+    let artist =
+        deepFind(item,[
+            "artist",
+            "artists",
+            "artistName",
+            "author",
+            "uploader",
+            "channel",
+            "creator",
+            "owner",
+            "singer"
+        ]);
+
+
+    let cover =
+        deepFind(item,[
+            "thumbnail",
+            "thumbnailUrl",
+            "thumb",
+            "image",
+            "imageUrl",
+            "cover",
+            "coverUrl",
+            "artwork",
+            "poster"
+        ]);
+
+
+    let audioUrl =
+        deepFind(item,[
+            "audio",
+            "audioUrl",
+            "audio_url",
+            "stream",
+            "streamUrl",
+            "stream_url",
+            "download",
+            "downloadUrl",
+            "download_url",
+            "mp3",
+            "mp3Url",
+            "mp3_url",
+            "playUrl",
+            "play_url",
+            "mediaUrl",
+            "media_url",
+            "url"
+        ]);
+
+
+    /*
+       Beberapa API memakai
+       nested object seperti:
+       author: {name:"..."}
+       thumbnail: {url:"..."}
+    */
+
+    if(!artist &&
+       item.author)
+        artist =
+        deepFind(
+            item.author,
+            ["name","title","channel"]
+        );
+
+
+    if(!cover &&
+       item.thumbnail)
+        cover =
+        deepFind(
+            item.thumbnail,
+            ["url","src","link"]
+        );
+
+
+    if(!audioUrl){
+
+        audioUrl =
+        deepFind(
+            item,
+            [
+                "src",
+                "source",
+                "file",
+                "fileUrl",
+                "directUrl"
+            ]
+        );
+
+    }
+
+
+    /*
+       Jangan membuang hasil hanya karena
+       cover atau artist kosong.
+    */
+
+    if(!title && !audioUrl)
+        return null;
+
+
+    return {
+
+        title:
+            title ||
+            "Musik tanpa judul",
+
+        artist:
+            artist ||
+            "Artis tidak diketahui",
+
+        cover:
+            cover || "",
+
+        audio:
+            audioUrl || ""
+
+    };
+}
+
+
+/* =========================
+   COLLECT OBJECTS
+========================= */
+
+function collectObjects(data){
+
+    const found = [];
+    const seen = new Set();
+
+
+    function walk(value){
+
+        if(!value ||
+           typeof value !== "object")
+            return;
+
+
+        if(seen.has(value))
+            return;
+
+        seen.add(value);
+
+
+        if(!Array.isArray(value)){
+
+            const song =
+                normalizeSong(value);
+
+            if(song)
+                found.push(song);
+
+        }
+
+
+        if(Array.isArray(value)){
+
+            value.forEach(item=>{
+                walk(item);
+            });
+
+        }else{
+
+            Object.values(value)
+                .forEach(item=>{
+                    walk(item);
+                });
+
+        }
+
+    }
+
+
+    walk(data);
+
+
+    return found;
+}
+
 
 /* =========================
    SEARCH
@@ -686,211 +1189,262 @@ function notify(title,text,icon="♫"){
 async function searchMusic(){
 
     const input =
-    document.getElementById("searchInput");
+        document.getElementById(
+            "searchInput"
+        );
 
-    const q =
-    input.value.trim();
+    const query =
+        input.value.trim();
 
-    if(!q){
+
+    if(!query){
+
         notify(
             "Masukkan lagu",
             "Ketik judul lagu terlebih dahulu",
             "!"
         );
+
         return;
     }
 
+
     const loading =
-    document.getElementById("loading");
+        document.getElementById(
+            "loading"
+        );
 
     const results =
-    document.getElementById("results");
+        document.getElementById(
+            "results"
+        );
+
 
     results.innerHTML = "";
 
     loading.classList.add("show");
 
+
     notify(
         "Mencari lagu",
-        `"${q}" sedang dicari...`,
+        `"${query}" sedang dicari...`,
         "⌕"
     );
+
 
     try{
 
         const response =
-        await fetch(
-            API + encodeURIComponent(q)
-        );
+            await fetch(
+                API +
+                encodeURIComponent(query),
+                {
+                    method:"GET",
+                    headers:{
+                        "Accept":
+                        "application/json"
+                    }
+                }
+            );
+
 
         if(!response.ok)
-            throw new Error("API Error");
+            throw new Error(
+                "HTTP " + response.status
+            );
+
 
         const data =
-        await response.json();
+            await response.json();
 
-        const songs =
-        extractSongs(data);
+
+        console.log(
+            "API RESPONSE:",
+            data
+        );
+
+
+        let songs =
+            collectObjects(data);
+
+
+        /*
+           Hapus duplikat
+        */
+
+        const unique = new Map();
+
+
+        songs.forEach(song=>{
+
+            const key =
+                (
+                    song.audio ||
+                    song.title
+                ).toString();
+
+
+            if(!unique.has(key))
+                unique.set(key,song);
+
+        });
+
+
+        songs =
+            Array.from(
+                unique.values()
+            );
+
 
         loading.classList.remove("show");
 
+
         if(!songs.length){
 
-            results.innerHTML =
-            `<div class="empty">
-                Lagu tidak ditemukan
-            </div>`;
+            results.innerHTML = `
+                <div class="empty">
+                    Tidak ada musik ditemukan
+                </div>
+            `;
 
             notify(
-                "Tidak ditemukan",
-                "Coba gunakan judul lagu lain",
+                "Musik tidak ditemukan",
+                "API tidak mengembalikan data lagu",
                 "!"
             );
 
             return;
         }
 
+
         notify(
             "Lagu ditemukan",
-            `${songs.length} hasil ditemukan`,
+            `${songs.length} lagu ditemukan`,
             "✓"
         );
 
+
         renderResults(songs);
 
-    }catch(error){
+    }
 
-        console.error(error);
+    catch(error){
+
+        console.error(
+            "SEARCH ERROR:",
+            error
+        );
+
 
         loading.classList.remove("show");
 
-        results.innerHTML =
-        `<div class="empty">
-            Gagal mengambil lagu.<br>
-            Periksa koneksi atau API.
-        </div>`;
+
+        results.innerHTML = `
+            <div class="empty">
+                Gagal mengambil data musik
+            </div>
+        `;
+
 
         notify(
-            "Terjadi kesalahan",
-            "Tidak dapat mengambil hasil lagu",
+            "Gagal mencari",
+            error.message ||
+            "Periksa koneksi atau API",
             "!"
         );
+
     }
+
 }
 
+
 /* =========================
-   EXTRACT API DATA
+   COVER
 ========================= */
 
-function extractSongs(data){
+function makeCover(url){
 
-    let arr = [];
+    if(!url){
 
-    if(Array.isArray(data))
-        arr = data;
+        return `
+            <div class="empty-cover">
+                ♫
+            </div>
+        `;
 
-    else if(Array.isArray(data.data))
-        arr = data.data;
+    }
 
-    else if(Array.isArray(data.result))
-        arr = data.result;
 
-    else if(Array.isArray(data.results))
-        arr = data.results;
+    return `
+        <img
+            src="${escapeHTML(url)}"
+            onerror="
+                this.outerHTML=
+                '<div class=&quot;empty-cover&quot;>♫</div>'
+            "
+        >
+    `;
 
-    else if(data.data && typeof data.data === "object")
-        arr = [data.data];
-
-    else if(typeof data === "object")
-        arr = [data];
-
-    return arr
-        .map(normalizeSong)
-        .filter(x => x.audio);
 }
 
-function normalizeSong(item){
-
-    return {
-
-        title:
-        item.title ||
-        item.name ||
-        item.song ||
-        "Unknown Song",
-
-        artist:
-        item.artist ||
-        item.author ||
-        item.channel ||
-        "Unknown Artist",
-
-        audio:
-        item.audio ||
-        item.audio_url ||
-        item.download ||
-        item.download_url ||
-        item.url ||
-        "",
-
-        cover:
-        item.thumbnail ||
-        item.thumb ||
-        item.image ||
-        item.cover ||
-        "https://placehold.co/500x500/10151d/1683ff?text=♫"
-    };
-}
 
 /* =========================
-   RENDER
+   RESULTS
 ========================= */
 
 function renderResults(songs){
 
     const results =
-    document.getElementById("results");
+        document.getElementById(
+            "results"
+        );
+
 
     results.innerHTML = "";
 
-    songs.forEach((song,index)=>{
+
+    songs.forEach(song=>{
 
         const card =
-        document.createElement("div");
+            document.createElement("div");
+
 
         card.className =
-        "result-card";
+            "result-card";
+
 
         card.innerHTML = `
-            <img
-                class="result-cover"
-                src="${escapeHTML(song.cover)}"
-                onerror="this.src='https://placehold.co/500x500/10151d/1683ff?text=♫'"
-            >
 
-            <div class="result-info">
-                <div class="result-title">
-                    ${escapeHTML(song.title)}
-                </div>
-
-                <div class="result-artist">
-                    ${escapeHTML(song.artist)}
-                </div>
-
-                <button class="play-small">
-                    ▶
-                </button>
-
-                <div style="clear:both"></div>
+            <div class="result-cover">
+                ${makeCover(song.cover)}
             </div>
+
+            <div class="result-title">
+                ${escapeHTML(song.title)}
+            </div>
+
+            <div class="result-artist">
+                ${escapeHTML(song.artist)}
+            </div>
+
+            <button class="play-small">
+                ▶
+            </button>
+
+            <div style="clear:both"></div>
         `;
 
+
         card.onclick =
-        ()=>playSong(song);
+            ()=>playSong(song);
+
 
         results.appendChild(card);
+
     });
+
 }
+
 
 /* =========================
    PLAY SONG
@@ -899,84 +1453,175 @@ function renderResults(songs){
 function playSong(song){
 
     if(!song.audio){
+
         notify(
             "Audio tidak tersedia",
-            "URL musik tidak ditemukan",
+            "API tidak memberikan URL audio",
             "!"
         );
+
         return;
     }
 
+
     currentSong = song;
 
-    audio.src = song.audio;
+
+    audio.src =
+        song.audio;
+
+
+    audio.load();
+
 
     audio.play()
-    .then(()=>{
-        updatePlayerUI();
-        saveLastPlayed(song);
+        .then(()=>{
 
-        notify(
-            "Sedang diputar",
-            song.title,
-            "▶"
-        );
-    })
-    .catch(error=>{
-        console.error(error);
+            saveLastPlayed(song);
 
-        notify(
-            "Tidak dapat diputar",
-            "URL audio tidak bisa diputar",
-            "!"
-        );
-    });
+            updateUI();
+
+            notify(
+                "Sedang diputar",
+                song.title,
+                "▶"
+            );
+
+        })
+        .catch(error=>{
+
+            console.error(
+                "PLAY ERROR:",
+                error
+            );
+
+            updateUI();
+
+            notify(
+                "Audio gagal diputar",
+                "URL audio tidak dapat dimainkan",
+                "!"
+            );
+
+        });
+
 
     document
-    .getElementById("miniPlayer")
-    .classList.add("show");
+        .getElementById("mini")
+        .classList.add("show");
 
-    updatePlayerUI();
+
+    updateUI();
+
 }
 
+
 /* =========================
-   PLAYER
+   PLAYER UI
+========================= */
+
+function updateUI(){
+
+    if(!currentSong)
+        return;
+
+
+    document.getElementById(
+        "miniCover"
+    ).innerHTML =
+        makeCover(
+            currentSong.cover
+        );
+
+
+    document.getElementById(
+        "miniTitle"
+    ).textContent =
+        currentSong.title;
+
+
+    document.getElementById(
+        "miniArtist"
+    ).textContent =
+        currentSong.artist;
+
+
+    document.getElementById(
+        "playerCover"
+    ).innerHTML =
+        makeCover(
+            currentSong.cover
+        );
+
+
+    document.getElementById(
+        "playerTitle"
+    ).textContent =
+        currentSong.title;
+
+
+    document.getElementById(
+        "playerArtist"
+    ).textContent =
+        currentSong.artist;
+
+
+    updatePlayButton();
+
+}
+
+
+/* =========================
+   PLAY / PAUSE
 ========================= */
 
 function togglePlay(){
 
     if(!currentSong){
+
         notify(
             "Belum ada lagu",
             "Pilih lagu terlebih dahulu",
             "♫"
         );
+
         return;
     }
+
 
     if(audio.paused){
 
         audio.play()
-        .catch(()=>{});
+            .catch(()=>{});
 
     }else{
+
         audio.pause();
+
     }
 
-    updatePlayButton();
 }
+
 
 function updatePlayButton(){
 
     const icon =
-    audio.paused ? "▶" : "Ⅱ";
+        audio.paused
+        ? "▶"
+        : "Ⅱ";
 
-    document.getElementById("miniPlay")
-    .textContent = icon;
 
-    document.getElementById("mainPlay")
-    .textContent = icon;
+    document.getElementById(
+        "miniPlay"
+    ).textContent = icon;
+
+
+    document.getElementById(
+        "mainPlay"
+    ).textContent = icon;
+
 }
+
 
 audio.addEventListener(
     "play",
@@ -988,60 +1633,56 @@ audio.addEventListener(
     updatePlayButton
 );
 
+
+/* =========================
+   SKIP
+========================= */
+
 function skip(seconds){
 
-    if(!audio.src) return;
+    if(!audio.src)
+        return;
 
-    audio.currentTime += seconds;
+
+    audio.currentTime +=
+        seconds;
+
 }
+
+
+/* =========================
+   PLAYER OPEN
+========================= */
 
 function openPlayer(){
 
     if(!currentSong){
+
         notify(
             "Belum ada lagu",
             "Pilih lagu terlebih dahulu",
             "♫"
         );
+
         return;
     }
 
+
     document
-    .getElementById("player")
-    .classList.add("open");
+        .getElementById("player")
+        .classList.add("open");
+
 }
+
 
 function closePlayer(){
 
     document
-    .getElementById("player")
-    .classList.remove("open");
+        .getElementById("player")
+        .classList.remove("open");
+
 }
 
-function updatePlayerUI(){
-
-    if(!currentSong) return;
-
-    document.getElementById("miniCover").src =
-    currentSong.cover;
-
-    document.getElementById("miniTitle").textContent =
-    currentSong.title;
-
-    document.getElementById("miniArtist").textContent =
-    currentSong.artist;
-
-    document.getElementById("playerCover").src =
-    currentSong.cover;
-
-    document.getElementById("playerTitle").textContent =
-    currentSong.title;
-
-    document.getElementById("playerArtist").textContent =
-    currentSong.artist;
-
-    updatePlayButton();
-}
 
 /* =========================
    PROGRESS
@@ -1050,70 +1691,104 @@ function updatePlayerUI(){
 audio.addEventListener(
     "loadedmetadata",
     ()=>{
-        document.getElementById("duration")
-        .textContent =
-        formatTime(audio.duration);
+
+        document.getElementById(
+            "duration"
+        ).textContent =
+            formatTime(
+                audio.duration
+            );
+
     }
 );
+
 
 audio.addEventListener(
     "timeupdate",
     ()=>{
 
-        if(!audio.duration) return;
+        if(!audio.duration)
+            return;
 
-        const percent =
-        (audio.currentTime /
-        audio.duration) * 100;
 
-        document.getElementById("progress")
-        .value = percent;
+        document.getElementById(
+            "progress"
+        ).value =
+            (
+                audio.currentTime /
+                audio.duration
+            ) * 100;
 
-        document.getElementById("currentTime")
-        .textContent =
-        formatTime(audio.currentTime);
+
+        document.getElementById(
+            "currentTime"
+        ).textContent =
+            formatTime(
+                audio.currentTime
+            );
+
     }
 );
 
-document
-.getElementById("progress")
-.addEventListener(
+
+document.getElementById(
+    "progress"
+).addEventListener(
     "input",
     e=>{
 
-        if(!audio.duration) return;
+        if(!audio.duration)
+            return;
+
 
         audio.currentTime =
-        (e.target.value / 100) *
-        audio.duration;
+            (
+                e.target.value /
+                100
+            ) *
+            audio.duration;
+
     }
 );
 
-document
-.getElementById("volume")
-.addEventListener(
+
+document.getElementById(
+    "volume"
+).addEventListener(
     "input",
     e=>{
+
         audio.volume =
-        e.target.value;
+            e.target.value;
+
     }
 );
 
-function formatTime(sec){
 
-    if(!isFinite(sec))
+function formatTime(seconds){
+
+    if(!isFinite(seconds))
         return "0:00";
 
-    const m =
-    Math.floor(sec / 60);
 
-    const s =
-    Math.floor(sec % 60)
-    .toString()
-    .padStart(2,"0");
+    const min =
+        Math.floor(
+            seconds / 60
+        );
 
-    return `${m}:${s}`;
+
+    const sec =
+        Math.floor(
+            seconds % 60
+        )
+        .toString()
+        .padStart(2,"0");
+
+
+    return `${min}:${sec}`;
+
 }
+
 
 /* =========================
    LAST PLAYED
@@ -1122,66 +1797,84 @@ function formatTime(sec){
 function saveLastPlayed(song){
 
     let history =
-    JSON.parse(
-        localStorage.getItem("bluefy_history")
-        || "[]"
-    );
+        JSON.parse(
+            localStorage.getItem(
+                "bluefy_history"
+            ) || "[]"
+        );
+
 
     history =
-    history.filter(
-        x=>x.audio !== song.audio
-    );
+        history.filter(
+            x =>
+            x.audio !== song.audio
+        );
+
 
     history.unshift(song);
 
+
     history =
-    history.slice(0,10);
+        history.slice(0,10);
+
 
     localStorage.setItem(
         "bluefy_history",
         JSON.stringify(history)
     );
 
+
     renderLastPlayed();
+
 }
+
 
 function renderLastPlayed(){
 
-    const container =
-    document.getElementById("lastPlayed");
+    const box =
+        document.getElementById(
+            "lastPlayed"
+        );
+
 
     let history =
-    JSON.parse(
-        localStorage.getItem("bluefy_history")
-        || "[]"
-    );
+        JSON.parse(
+            localStorage.getItem(
+                "bluefy_history"
+            ) || "[]"
+        );
+
 
     if(!history.length){
 
-        container.innerHTML =
-        `<div class="empty">
-            Belum ada lagu yang diputar
-        </div>`;
+        box.innerHTML = `
+            <div class="empty">
+                Belum ada lagu yang diputar
+            </div>
+        `;
 
         return;
     }
 
-    container.innerHTML = "";
+
+    box.innerHTML = "";
+
 
     history.forEach(song=>{
 
         const card =
-        document.createElement("div");
+            document.createElement("div");
+
 
         card.className =
-        "last-card";
+            "last-card";
+
 
         card.innerHTML = `
-            <img
-                class="cover"
-                src="${escapeHTML(song.cover)}"
-                onerror="this.src='https://placehold.co/500x500/10151d/1683ff?text=♫'"
-            >
+
+            <div class="last-cover">
+                ${makeCover(song.cover)}
+            </div>
 
             <div class="last-title">
                 ${escapeHTML(song.title)}
@@ -1190,14 +1883,20 @@ function renderLastPlayed(){
             <div class="last-artist">
                 ${escapeHTML(song.artist)}
             </div>
+
         `;
 
-        card.onclick =
-        ()=>playSong(song);
 
-        container.appendChild(card);
+        card.onclick =
+            ()=>playSong(song);
+
+
+        box.appendChild(card);
+
     });
+
 }
+
 
 /* =========================
    NAV
@@ -1205,38 +1904,52 @@ function renderLastPlayed(){
 
 function focusSearch(){
 
-    document
-    .getElementById("searchInput")
-    .focus();
+    const input =
+        document.getElementById(
+            "searchInput"
+        );
+
+
+    input.focus();
+
 
     window.scrollTo({
         top:0,
         behavior:"smooth"
     });
+
 }
+
 
 function showLast(){
 
     document
-    .getElementById("lastPlayed")
-    .scrollIntoView({
-        behavior:"smooth"
-    });
+        .getElementById("lastPlayed")
+        .scrollIntoView({
+            behavior:"smooth"
+        });
+
 }
 
+
 /* =========================
-   ENTER SEARCH
+   ENTER
 ========================= */
 
 document
-.getElementById("searchInput")
-.addEventListener(
-    "keydown",
-    e=>{
-        if(e.key === "Enter")
-            searchMusic();
-    }
-);
+    .getElementById(
+        "searchInput"
+    )
+    .addEventListener(
+        "keydown",
+        e=>{
+
+            if(e.key === "Enter")
+                searchMusic();
+
+        }
+    );
+
 
 /* =========================
    KEYBOARD
@@ -1247,26 +1960,34 @@ document.addEventListener(
     e=>{
 
         if(
-            e.target.tagName === "INPUT"
-        ) return;
+            e.target.tagName ===
+            "INPUT"
+        )
+            return;
+
 
         if(e.code === "Space"){
 
             e.preventDefault();
+
             togglePlay();
 
         }
 
+
         if(e.code === "ArrowRight")
             skip(10);
 
+
         if(e.code === "ArrowLeft")
             skip(-10);
+
     }
 );
 
+
 /* =========================
-   SECURITY
+   ESCAPE
 ========================= */
 
 function escapeHTML(value){
@@ -1277,13 +1998,16 @@ function escapeHTML(value){
         .replaceAll(">","&gt;")
         .replaceAll('"',"&quot;")
         .replaceAll("'","&#039;");
+
 }
+
 
 /* =========================
    INIT
 ========================= */
 
 renderLastPlayed();
+
 </script>
 
 </body>
