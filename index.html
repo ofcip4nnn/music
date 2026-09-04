@@ -2,8 +2,8 @@
 <html lang="id">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Music Player REST API</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Music Player</title>
 
 <style>
 *{
@@ -15,14 +15,15 @@
 body{
   min-height:100vh;
   background:#050505;
-  color:white;
+  color:#fff;
   font-family:Arial,sans-serif;
-  padding:20px;
 }
 
 .app{
+  width:100%;
   max-width:500px;
   margin:auto;
+  padding:20px;
 }
 
 /* SEARCH */
@@ -30,11 +31,884 @@ body{
 .search{
   display:flex;
   gap:8px;
-  margin-bottom:25px;
+  margin-bottom:20px;
 }
 
 .search input{
   flex:1;
+  background:#151515;
+  border:1px solid #292929;
+  outline:none;
+  color:#fff;
+  padding:14px;
+  border-radius:14px;
+  font-size:15px;
+}
+
+.search button{
+  border:0;
+  background:#fff;
+  color:#000;
+  padding:0 18px;
+  border-radius:14px;
+  font-weight:bold;
+}
+
+/* STATUS */
+
+.status{
+  text-align:center;
+  color:#888;
+  font-size:13px;
+  margin:15px 0;
+}
+
+/* COVER */
+
+.cover-box{
+  display:flex;
+  justify-content:center;
+  margin-top:20px;
+}
+
+.cover{
+  width:min(80vw,330px);
+  aspect-ratio:1;
+  object-fit:cover;
+  border-radius:22px;
+  background:#111;
+  box-shadow:0 25px 70px rgba(0,0,0,.7);
+}
+
+/* INFO */
+
+.info{
+  margin-top:25px;
+}
+
+.title{
+  font-size:25px;
+  font-weight:800;
+}
+
+.artist{
+  color:#999;
+  margin-top:6px;
+}
+
+/* PROGRESS */
+
+.progress-box{
+  margin-top:25px;
+}
+
+.progress{
+  width:100%;
+  accent-color:#fff;
+}
+
+.time{
+  display:flex;
+  justify-content:space-between;
+  color:#888;
+  font-size:12px;
+  margin-top:5px;
+}
+
+/* CONTROLS */
+
+.controls{
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  gap:25px;
+  margin-top:20px;
+}
+
+.control{
+  width:45px;
+  height:45px;
+  border:0;
+  border-radius:50%;
+  background:transparent;
+  color:#fff;
+  font-size:20px;
+}
+
+.play{
+  width:65px;
+  height:65px;
+  background:#fff;
+  color:#000;
+  font-size:24px;
+}
+
+/* VOLUME */
+
+.volume-box{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  margin-top:20px;
+}
+
+.volume{
+  flex:1;
+  accent-color:#fff;
+}
+
+/* LYRICS */
+
+.lyrics{
+  margin-top:30px;
+  padding:20px;
+  border-radius:20px;
+  background:#111;
+}
+
+.lyrics h3{
+  font-size:13px;
+  color:#888;
+  margin-bottom:15px;
+  text-transform:uppercase;
+  letter-spacing:1px;
+}
+
+.lyrics p{
+  color:#ddd;
+  line-height:2;
+  white-space:pre-line;
+}
+</style>
+</head>
+
+<body>
+
+<div class="app">
+
+  <!-- SEARCH -->
+  <div class="search">
+
+    <input
+      id="query"
+      placeholder="Cari judul lagu..."
+      value="Laskar Cinta">
+
+    <button onclick="searchMusic()">
+      Cari
+    </button>
+
+  </div>
+
+
+  <!-- STATUS -->
+  <div id="status" class="status">
+    Siap mencari lagu
+  </div>
+
+
+  <!-- COVER -->
+  <div class="cover-box">
+
+    <img
+      id="cover"
+      class="cover"
+      src="https://d.uguu.se/EpBeztSw.png">
+
+  </div>
+
+
+  <!-- INFO -->
+  <div class="info">
+
+    <div id="title" class="title">
+      Laskar Cinta
+    </div>
+
+    <div id="artist" class="artist">
+      Dewa 19
+    </div>
+
+  </div>
+
+
+  <!-- AUDIO -->
+  <audio id="audio"></audio>
+
+
+  <!-- PROGRESS -->
+  <div class="progress-box">
+
+    <input
+      id="progress"
+      class="progress"
+      type="range"
+      min="0"
+      max="100"
+      value="0">
+
+    <div class="time">
+
+      <span id="current">
+        0:00
+      </span>
+
+      <span id="duration">
+        0:00
+      </span>
+
+    </div>
+
+  </div>
+
+
+  <!-- CONTROLS -->
+  <div class="controls">
+
+    <button
+      class="control"
+      onclick="skip(-10)">
+      ↶
+    </button>
+
+    <button
+      id="playBtn"
+      class="control play"
+      onclick="togglePlay()">
+      ▶
+    </button>
+
+    <button
+      class="control"
+      onclick="skip(10)">
+      ↷
+    </button>
+
+  </div>
+
+
+  <!-- VOLUME -->
+  <div class="volume-box">
+
+    <button
+      id="muteBtn"
+      onclick="toggleMute()">
+      🔊
+    </button>
+
+    <input
+      id="volume"
+      class="volume"
+      type="range"
+      min="0"
+      max="1"
+      step="0.01"
+      value="1">
+
+  </div>
+
+
+  <!-- LYRICS -->
+  <div class="lyrics">
+
+    <h3>Lirik</h3>
+
+    <p>
+Laskar Cinta
+
+<!--
+Tempel lirik yang sebelumnya
+kamu berikan di sini.
+
+Lirik dibuat STATIC,
+tidak ada auto-sync.
+-->
+
+    </p>
+
+  </div>
+
+</div>
+
+
+<script>
+
+/* =================================
+   API
+================================= */
+
+const API =
+"https://api.ikyyxd.my.id/search/ytplay?q=";
+
+
+/* =================================
+   ELEMENT
+================================= */
+
+const audio =
+document.getElementById("audio");
+
+const query =
+document.getElementById("query");
+
+const title =
+document.getElementById("title");
+
+const artist =
+document.getElementById("artist");
+
+const cover =
+document.getElementById("cover");
+
+const status =
+document.getElementById("status");
+
+const playBtn =
+document.getElementById("playBtn");
+
+const progress =
+document.getElementById("progress");
+
+const current =
+document.getElementById("current");
+
+const duration =
+document.getElementById("duration");
+
+const volume =
+document.getElementById("volume");
+
+const muteBtn =
+document.getElementById("muteBtn");
+
+
+/* =================================
+   SEARCH
+================================= */
+
+async function searchMusic(){
+
+  const q =
+  query.value.trim();
+
+  if(!q){
+
+    status.textContent =
+    "Masukkan judul lagu.";
+
+    return;
+
+  }
+
+
+  status.textContent =
+  "🔎 Mencari lagu...";
+
+
+  try{
+
+    const url =
+    API + encodeURIComponent(q);
+
+
+    const response =
+    await fetch(url);
+
+
+    if(!response.ok){
+
+      throw new Error(
+        "HTTP " + response.status
+      );
+
+    }
+
+
+    const data =
+    await response.json();
+
+
+    console.log(
+      "RESPONSE API:",
+      data
+    );
+
+
+    /*
+      Coba mengambil data audio
+      dari beberapa kemungkinan struktur.
+    */
+
+    const result =
+    extractData(data);
+
+
+    if(!result.audio){
+
+      throw new Error(
+        "URL audio tidak ditemukan."
+      );
+
+    }
+
+
+    title.textContent =
+    result.title || q;
+
+
+    artist.textContent =
+    result.artist || "Unknown Artist";
+
+
+    if(result.thumbnail){
+
+      cover.src =
+      result.thumbnail;
+
+    }
+
+
+    audio.src =
+    result.audio;
+
+    audio.load();
+
+
+    status.textContent =
+    "✓ Lagu ditemukan";
+
+
+    /*
+      Autoplay mungkin diblokir
+      browser. Jika diblokir,
+      user tinggal menekan Play.
+    */
+
+    try{
+
+      await audio.play();
+
+    }catch{
+
+      playBtn.textContent =
+      "▶";
+
+    }
+
+
+  }catch(error){
+
+    console.error(error);
+
+    status.textContent =
+    "❌ " + error.message;
+
+  }
+
+}
+
+
+/* =================================
+   EXTRACT API DATA
+================================= */
+
+function extractData(data){
+
+  let result = {
+
+    audio:null,
+    title:null,
+    artist:null,
+    thumbnail:null
+
+  };
+
+
+  function scan(obj){
+
+    if(!obj ||
+       typeof obj !== "object")
+      return;
+
+
+    for(const key in obj){
+
+      const value =
+      obj[key];
+
+      const k =
+      key.toLowerCase();
+
+
+      if(typeof value === "string"){
+
+        /*
+          AUDIO
+        */
+
+        if(!result.audio){
+
+          if(
+            k === "audio" ||
+            k === "audio_url" ||
+            k === "audioUrl" ||
+            k === "download" ||
+            k === "download_url" ||
+            k === "url"
+          ){
+
+            if(value.startsWith("http")){
+
+              result.audio =
+              value;
+
+            }
+
+          }
+
+        }
+
+
+        /*
+          TITLE
+        */
+
+        if(
+          !result.title &&
+          (
+            k === "title" ||
+            k === "name"
+          )
+        ){
+
+          result.title =
+          value;
+
+        }
+
+
+        /*
+          ARTIST
+        */
+
+        if(
+          !result.artist &&
+          (
+            k === "artist" ||
+            k === "author" ||
+            k === "channel"
+          )
+        ){
+
+          result.artist =
+          value;
+
+        }
+
+
+        /*
+          THUMBNAIL
+        */
+
+        if(
+          !result.thumbnail &&
+          (
+            k === "thumbnail" ||
+            k === "thumb" ||
+            k === "image" ||
+            k === "cover"
+          )
+        ){
+
+          if(value.startsWith("http")){
+
+            result.thumbnail =
+            value;
+
+          }
+
+        }
+
+      }
+
+
+      if(
+        value &&
+        typeof value === "object"
+      ){
+
+        scan(value);
+
+      }
+
+    }
+
+  }
+
+
+  scan(data);
+
+
+  return result;
+
+}
+
+
+/* =================================
+   PLAY
+================================= */
+
+function togglePlay(){
+
+  if(!audio.src){
+
+    status.textContent =
+    "Cari lagu terlebih dahulu.";
+
+    return;
+
+  }
+
+
+  if(audio.paused){
+
+    audio.play();
+
+  }else{
+
+    audio.pause();
+
+  }
+
+}
+
+
+audio.addEventListener(
+"play",
+()=>{
+
+  playBtn.textContent =
+  "❚❚";
+
+});
+
+
+audio.addEventListener(
+"pause",
+()=>{
+
+  playBtn.textContent =
+  "▶";
+
+});
+
+
+/* =================================
+   PROGRESS
+================================= */
+
+audio.addEventListener(
+"loadedmetadata",
+()=>{
+
+  duration.textContent =
+  formatTime(audio.duration);
+
+});
+
+
+audio.addEventListener(
+"timeupdate",
+()=>{
+
+  if(audio.duration){
+
+    progress.value =
+    (audio.currentTime /
+    audio.duration) * 100;
+
+  }
+
+
+  current.textContent =
+  formatTime(
+    audio.currentTime
+  );
+
+});
+
+
+progress.addEventListener(
+"input",
+()=>{
+
+  if(audio.duration){
+
+    audio.currentTime =
+    (progress.value / 100)
+    * audio.duration;
+
+  }
+
+});
+
+
+/* =================================
+   FORMAT TIME
+================================= */
+
+function formatTime(seconds){
+
+  if(!Number.isFinite(seconds))
+    return "0:00";
+
+
+  const min =
+  Math.floor(seconds / 60);
+
+  const sec =
+  Math.floor(seconds % 60)
+  .toString()
+  .padStart(2,"0");
+
+
+  return min + ":" + sec;
+
+}
+
+
+/* =================================
+   SKIP
+================================= */
+
+function skip(seconds){
+
+  if(!audio.duration)
+    return;
+
+
+  audio.currentTime =
+  Math.max(
+    0,
+    Math.min(
+      audio.duration,
+      audio.currentTime + seconds
+    )
+  );
+
+}
+
+
+/* =================================
+   VOLUME
+================================= */
+
+volume.addEventListener(
+"input",
+()=>{
+
+  audio.volume =
+  volume.value;
+
+
+  audio.muted =
+  audio.volume === 0;
+
+
+  muteBtn.textContent =
+  audio.muted
+  ? "🔇"
+  : "🔊";
+
+});
+
+
+/* =================================
+   MUTE
+================================= */
+
+function toggleMute(){
+
+  audio.muted =
+  !audio.muted;
+
+
+  muteBtn.textContent =
+  audio.muted
+  ? "🔇"
+  : "🔊";
+
+}
+
+
+/* =================================
+   ENTER
+================================= */
+
+query.addEventListener(
+"keydown",
+(e)=>{
+
+  if(e.key === "Enter"){
+
+    searchMusic();
+
+  }
+
+});
+
+
+/* =================================
+   KEYBOARD
+================================= */
+
+document.addEventListener(
+"keydown",
+(e)=>{
+
+  if(
+    e.target.tagName === "INPUT"
+  )
+    return;
+
+
+  if(e.code === "Space"){
+
+    e.preventDefault();
+
+    togglePlay();
+
+  }
+
+
+  if(e.key === "ArrowRight"){
+
+    skip(5);
+
+  }
+
+
+  if(e.key === "ArrowLeft"){
+
+    skip(-5);
+
+  }
+
+
+  if(
+    e.key.toLowerCase() === "m"
+  ){
+
+    toggleMute();
+
+  }
+
+});
+
+</script>
+
+</body>
+</html>  flex:1;
   padding:15px;
   border:1px solid #333;
   border-radius:14px;
